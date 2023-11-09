@@ -10,7 +10,6 @@ import {
   FlatList,
   ImageBackground,
 } from "react-native";
-import { scaleHeight, scaleWidth } from "../scaleProps/ScaleProps";
 import { useFonts } from "expo-font";
 import { useCallback } from "react";
 import MainHeader from "./header/MainHeader";

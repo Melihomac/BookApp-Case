@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -21,17 +21,20 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const [tabBarSelect, setTabBarSelect] = useState();
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="Kitaplık">
+        <Tab.Navigator initialRouteName="Library">
           <Tab.Screen
             name="Anasayfa"
             component={Home}
             options={{
               headerShown: false,
               tabBarIcon: () => (
-                <Image source={require("./assets/icons/HomeIcon.png")} />
+                <Image
+                  source={require("./assets/icons/BottomButtons/HomeIcon.png")}
+                />
               ),
             }}
           />
@@ -41,7 +44,9 @@ const App = () => {
             options={{
               headerShown: false,
               tabBarIcon: () => (
-                <Image source={require("./assets/icons/HomeIcon.png")} />
+                <Image
+                  source={require("./assets/icons/BottomButtons/SearchButton.png")}
+                />
               ),
             }}
           />
@@ -51,7 +56,9 @@ const App = () => {
             options={{
               headerShown: false,
               tabBarIcon: () => (
-                <Image source={require("./assets/icons/HomeIcon.png")} />
+                <Image
+                  source={require("./assets/icons/BottomButtons/LibraryButton.png")}
+                />
               ),
             }}
           />
@@ -61,7 +68,9 @@ const App = () => {
             options={{
               headerShown: false,
               tabBarIcon: () => (
-                <Image source={require("./assets/icons/HomeIcon.png")} />
+                <Image
+                  source={require("./assets/icons/BottomButtons/ProfileButton.png")}
+                />
               ),
             }}
           />
