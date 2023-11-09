@@ -16,6 +16,7 @@ import MainHeader from "./header/MainHeader";
 import MyBooks from "./myBooks/MyBooks";
 import NowReading from "./nowReading/NowReading";
 import BookReviews from "./bookReviews/BookReviews";
+import BottomSheet from "./bottomSheet/BottomSheet";
 
 interface Item {
   id: string;
@@ -93,6 +94,7 @@ const Library = () => {
         <NowReading />
         <View style={styles.stickStyle}></View>
         <BookReviews />
+        <BottomSheet />
       </SafeAreaView>
     </ScrollView>
   );
