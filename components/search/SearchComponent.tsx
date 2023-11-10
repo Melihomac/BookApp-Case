@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -12,10 +12,42 @@ import {
   TextInput,
 } from "react-native";
 import search from "../../assets/icons/BottomButtons/SearchButton.png";
+import useHook from "../hook/useHook";
+
+interface Item {
+  id: string;
+  title: string;
+}
 
 const SearchComponent = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchNow, setSearchNow] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    useHook(searchTerm, books).then((data) => {
+      setBooks(data);
+      setLoading(false);
+    });
+  }, [searchNow]);
+
+  const renderItem = ({ item }: { item: Item }) => {
+    return (
+      <View>
+        <TouchableOpacity
+          style={{ flexDirection: "row" }}
+          onPress={() => handleMovie(item?.id)}
+        >
+          <View style={{ width: "100%" }}>
+            <Text style={styles.newMovieNames} numberOfLines={2}>
+              {item.name}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
   return (
     <View style={styles.searchContainer}>
       <View style={styles.searchWrapper}>
@@ -33,6 +65,20 @@ const SearchComponent = () => {
           placeholderTextColor="#ACACAC"
           autoFocus={false}
           autoComplete="off"
+        />
+      </View>
+      <TouchableOpacity
+        style={styles.searchBtn}
+        onPress={() => {
+          console.log("pressed");
+          setSearchNow(!searchNow);
+        }}
+      ></TouchableOpacity>
+      <View>
+        <FlatList
+          data={books}
+          renderItem={renderItem}
+          style={{ marginBottom: 165 }}
         />
       </View>
     </View>
@@ -54,6 +100,15 @@ const styles = StyleSheet.create({
   },
   searchBtnImage: {
     marginRight: 10,
+  },
+  searchBtn: {
+    width: 50,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#A20E0E",
+    borderRadius: 15,
+    marginLeft: 5,
   },
 });
 
