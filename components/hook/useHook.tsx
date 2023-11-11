@@ -1,35 +1,32 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
-
-//const url = "http://localhost:3000/api/data";
 
 const useHook = async (search: any, books: any) => {
   const headers = {
     "Content-Type": "application/json",
   };
-  const url = "http://localhost:3000/api/data";
-
-  axios.get(url, { headers });
+  const url = "http://localhost:3000/api/data"; // veya uygun URL
   console.log("fetch books", search);
-  if (!search) {
-    const response = await axios.get(`${URL}`);
-    return [...books, ...response.data.books];
-  } else {
-    console.log("in else");
-    const response = await axios.get(`${URL}`);
-    console.log(response.data.books);
-    return [...response.data.books];
+
+  try {
+    const response = await axios.get(url, { headers });
+    // API yanıtındaki veriyi kontrol et
+    console.log(response.data);
+    // books özelliğini kontrol et
+    const newBooks = response.data.books || [];
+    if (search) {
+      // Eğer bir arama terimi varsa, arama terimine uygun kitapları filtrele
+      const filteredBooks = newBooks.filter((book: any) =>
+        book.name.toLowerCase().includes(search.toLowerCase())
+      );
+      return [...filteredBooks];
+    } else {
+      return [...books, ...newBooks];
+    }
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    // Hata durumunda boş bir dizi veya başka bir değer dönebilirsiniz.
+    return [];
   }
 };
 

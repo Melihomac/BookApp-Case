@@ -17,6 +17,10 @@ import useHook from "../hook/useHook";
 interface Item {
   id: string;
   title: string;
+  name: any;
+  books: any;
+  image: string;
+  author: string;
 }
 
 const SearchComponent = () => {
@@ -32,21 +36,30 @@ const SearchComponent = () => {
     });
   }, [searchNow]);
 
-  const renderItem = ({ item }: { item: Item }) => {
+  const renderItem = ({ item, index }: { item: Item; index: number }) => {
+    console.log("BURASI " + item.image);
+    console.log(item.author);
     return (
-      <View>
-        <TouchableOpacity
-          style={{ flexDirection: "row" }}
-          onPress={() => handleMovie(item?.id)}
-        >
-          <View style={{ width: "100%" }}>
-            <Text style={styles.newMovieNames} numberOfLines={2}>
-              {item.name}
-            </Text>
+      <View key={index}>
+        <TouchableOpacity>
+          <View style={styles.resultStyle}>
+            <Image
+              source={{
+                uri: `/Users/melihomac/Desktop/JobBookApp/backend${item.image}`,
+              }}
+              style={styles.imageStyle}
+            />
+            <View style={styles.bookInfoStyle}>
+              <Text style={styles.bookNameStyle}>{item.name}</Text>
+              <Text style={styles.bookAuthorStyle}>{item.author}</Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
     );
+  };
+  const onSubmitted = () => {
+    setSearchNow(!searchNow);
   };
   return (
     <View style={styles.searchContainer}>
@@ -65,22 +78,21 @@ const SearchComponent = () => {
           placeholderTextColor="#ACACAC"
           autoFocus={false}
           autoComplete="off"
+          onSubmitEditing={() => onSubmitted()}
         />
       </View>
-      <TouchableOpacity
-        style={styles.searchBtn}
-        onPress={() => {
-          console.log("pressed");
-          setSearchNow(!searchNow);
-        }}
-      ></TouchableOpacity>
       <View>
         <FlatList
           data={books}
           renderItem={renderItem}
-          style={{ marginBottom: 165 }}
+          style={styles.bookStyle}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
         />
       </View>
+      <TouchableOpacity>
+        <Text>Seçimi Ekle</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -101,14 +113,50 @@ const styles = StyleSheet.create({
   searchBtnImage: {
     marginRight: 10,
   },
-  searchBtn: {
-    width: 50,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#A20E0E",
-    borderRadius: 15,
-    marginLeft: 5,
+  bookStyle: {
+    marginTop: 80,
+    height: 331,
+    width: 311,
+    backgroundColor: "red",
+  },
+  resultStyle: {
+    width: 184.51,
+    borderRadius: 18.83,
+    height: 305,
+    backgroundColor: "#E0DFDE",
+    marginRight: 16,
+  },
+  imageStyle: {
+    height: 227.18,
+    width: 152.52,
+    marginTop: 16.32,
+    marginLeft: 16.32,
+    borderRadius: 6.28,
+  },
+  bookInfoStyle: {
+    width: 185,
+    height: 87.86,
+    marginBottom: 16.32,
+    shadowOffset: { width: 2.5, height: 2.5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    elevation: 5,
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 18.83,
+    borderBottomRightRadius: 18.83,
+  },
+  bookNameStyle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 20.08,
+    marginTop: 13.93,
+  },
+  bookAuthorStyle: {
+    width: 144.86,
+    height: 60,
+    fontSize: 16,
+    marginLeft: 20.08,
+    marginTop: 5.93,
   },
 });
 

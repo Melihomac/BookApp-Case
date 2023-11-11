@@ -7,6 +7,8 @@ import {
   Image,
   ImageBackground,
   FlatList,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -20,7 +22,7 @@ interface Item {
 
 const BottomSheetComponent = () => {
   const refRBSheet = useRef<RBSheet>(null);
-  const snapPoints = useMemo(() => ["75%"], []);
+  const snapPoints = useMemo(() => ["%80"], []);
   const DATA: Item[] = [
     { id: "1", title: "Kitap Ekle" },
     { id: "2", title: "Kitap Ekle" },
@@ -57,44 +59,46 @@ const BottomSheetComponent = () => {
   };
 
   return (
-    <View>
-      <View style={styles.myBookSectionStyle}>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      <GestureHandlerRootView>
-        <RBSheet
-          ref={refRBSheet}
-          height={scaleHeight(605)}
-          openDuration={250}
-          customStyles={{
-            wrapper: {
-              backgroundColor: "transparent",
-            },
-            draggableIcon: {
-              backgroundColor: "#000",
-            },
-          }}
-        >
-          <View style={styles.bottomSheetStyle}>
-            <View style={styles.shortStick}></View>
-            <SearchComponent />
-            <View style={styles.yourBooksStyle}>
-              <Text style={styles.yourBooksBoldTextStyle}>
-                Okumuş Olabileceğin Kitaplar
-              </Text>
-              <Text style={styles.yourBooksTextStyle}>
-                Kartlara Tıklayarak seçim yapabilirsin
-              </Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <View style={styles.myBookSectionStyle}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+        <GestureHandlerRootView>
+          <RBSheet
+            ref={refRBSheet}
+            height={scaleHeight(605)}
+            openDuration={250}
+            customStyles={{
+              wrapper: {
+                backgroundColor: "transparent",
+              },
+              draggableIcon: {
+                backgroundColor: "#000",
+              },
+            }}
+          >
+            <View style={styles.bottomSheetStyle}>
+              <View style={styles.shortStick}></View>
+              <SearchComponent />
+              <View style={styles.yourBooksStyle}>
+                <Text style={styles.yourBooksBoldTextStyle}>
+                  Okumuş Olabileceğin Kitaplar
+                </Text>
+                <Text style={styles.yourBooksTextStyle}>
+                  Kartlara Tıklayarak seçim yapabilirsin
+                </Text>
+              </View>
             </View>
-          </View>
-        </RBSheet>
-      </GestureHandlerRootView>
-    </View>
+          </RBSheet>
+        </GestureHandlerRootView>
+      </View>
+    </SafeAreaView>
   );
 };
 
