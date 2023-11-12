@@ -65,4 +65,10 @@ Welcome to my BookApp project. This project was made upon request. You can searc
    |-- package.json
    |-- .gitignore
 
+3. All Structure:
+
+   case/
+   |  -- Files.../
+   backend/
+   |  -- Files.../
 
