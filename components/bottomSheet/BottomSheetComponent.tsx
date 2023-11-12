@@ -22,7 +22,7 @@ interface Item {
 
 const BottomSheetComponent = () => {
   const refRBSheet = useRef<RBSheet>(null);
-  const snapPoints = useMemo(() => ["%80"], []);
+  const snapPoints = useMemo(() => ["%75"], []);
   const DATA: Item[] = [
     { id: "1", title: "Kitap Ekle" },
     { id: "2", title: "Kitap Ekle" },
@@ -72,7 +72,7 @@ const BottomSheetComponent = () => {
         <GestureHandlerRootView>
           <RBSheet
             ref={refRBSheet}
-            height={scaleHeight(605)}
+            height={scaleHeight(615)}
             openDuration={250}
             customStyles={{
               wrapper: {

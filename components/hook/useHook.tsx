@@ -11,7 +11,7 @@ const useHook = async (search: any, books: any) => {
   try {
     const response = await axios.get(url, { headers });
     // API yanıtındaki veriyi kontrol et
-    console.log(response.data);
+    //console.log(response.data);
     // books özelliğini kontrol et
     const newBooks = response.data.books || [];
     if (search) {

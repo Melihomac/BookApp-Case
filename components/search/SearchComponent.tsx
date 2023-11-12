@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import search from "../../assets/icons/BottomButtons/SearchButton.png";
 import useHook from "../hook/useHook";
+import { ref, set } from "firebase/database";
 
 interface Item {
   id: string;
@@ -21,6 +22,7 @@ interface Item {
   books: any;
   image: string;
   author: string;
+  data: string;
 }
 
 const SearchComponent = () => {
@@ -28,6 +30,9 @@ const SearchComponent = () => {
   const [searchNow, setSearchNow] = useState(false);
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
+  const [active, setActive] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState("white");
+  const [selectedBook, setSelectedBook] = useState("");
   useEffect(() => {
     setLoading(true);
     useHook(searchTerm, books).then((data) => {
@@ -35,13 +40,19 @@ const SearchComponent = () => {
       setLoading(false);
     });
   }, [searchNow]);
-
+  const onPressHandler = (item: Item) => {
+    setActive(true);
+    setBackgroundColor("#F09336");
+    setSelectedBook(`${item.name}`);
+    console.log("Seçilen Kitap: ", item.name);
+    console.log(selectedBook);
+  };
   const renderItem = ({ item, index }: { item: Item; index: number }) => {
-    console.log("BURASI " + item.image);
-    console.log(item.author);
+    //console.log("BURASI " + item.image);
+    //console.log(item.author);
     return (
       <View key={index}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onPressHandler(item)}>
           <View style={styles.resultStyle}>
             <Image
               source={{
@@ -61,6 +72,7 @@ const SearchComponent = () => {
   const onSubmitted = () => {
     setSearchNow(!searchNow);
   };
+  const create = () => {};
   return (
     <View style={styles.searchContainer}>
       <View style={styles.searchWrapper}>
@@ -90,8 +102,22 @@ const SearchComponent = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <TouchableOpacity>
-        <Text>Seçimi Ekle</Text>
+      <TouchableOpacity
+        style={[
+          styles.addBookFuncStyle,
+          active ? styles.activeStyle : styles.inActiveStyle,
+        ]}
+        disabled={!active}
+        onPress={create}
+      >
+        <Text
+          style={[
+            styles.addBookTextStyle,
+            active ? styles.activeStyle : styles.inActiveStyle,
+          ]}
+        >
+          Seçimi Ekle
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -117,7 +143,6 @@ const styles = StyleSheet.create({
     marginTop: 80,
     height: 331,
     width: 311,
-    backgroundColor: "red",
   },
   resultStyle: {
     width: 184.51,
@@ -157,6 +182,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 20.08,
     marginTop: 5.93,
+  },
+  addBookFuncStyle: {
+    width: 311,
+    height: 50,
+    backgroundColor: "#E0DFDE",
+    borderRadius: 40,
+    marginTop: 20,
+    color: "#ACACAC",
+  },
+  inActiveStyle: {
+    backgroundColor: "#E0DFDE",
+    color: "#ACACAC",
+  },
+  activeStyle: {
+    backgroundColor: "#1E1E1E",
+    color: "#fff",
+  },
+  addBookTextStyle: {
+    marginLeft: 115.5,
+    marginTop: 15,
   },
 });
 
