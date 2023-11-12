@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -14,6 +14,9 @@ import {
 import search from "../../assets/icons/BottomButtons/SearchButton.png";
 import useHook from "../hook/useHook";
 import { ref, set } from "firebase/database";
+import uuid from "react-native-uuid";
+import { db } from "../../FirebaseConfig";
+import RBSheet from "react-native-raw-bottom-sheet";
 
 interface Item {
   id: string;
@@ -25,7 +28,11 @@ interface Item {
   data: string;
 }
 
-const SearchComponent = () => {
+interface SearchComponentProps {
+  onClose: () => void;
+}
+
+const SearchComponent: React.FC<SearchComponentProps> = ({ onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchNow, setSearchNow] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -33,6 +40,9 @@ const SearchComponent = () => {
   const [active, setActive] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [selectedBook, setSelectedBook] = useState("");
+  const [uuidNumber, setUuidNumber] = useState(uuid.v4());
+  const [addTrue, setAddTrue] = useState(false);
+  const bottomSheetRef = useRef(null);
   useEffect(() => {
     setLoading(true);
     useHook(searchTerm, books).then((data) => {
@@ -48,8 +58,6 @@ const SearchComponent = () => {
     console.log(selectedBook);
   };
   const renderItem = ({ item, index }: { item: Item; index: number }) => {
-    //console.log("BURASI " + item.image);
-    //console.log(item.author);
     return (
       <View key={index}>
         <TouchableOpacity onPress={() => onPressHandler(item)}>
@@ -72,7 +80,20 @@ const SearchComponent = () => {
   const onSubmitted = () => {
     setSearchNow(!searchNow);
   };
-  const create = () => {};
+  const create = () => {
+    onClose();
+    set(ref(db, "books/"), {
+      selectedBook: selectedBook,
+      uuid: uuidNumber,
+    })
+      .then(() => {
+        console.log("dataSaved");
+        setAddTrue(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <View style={styles.searchContainer}>
       <View style={styles.searchWrapper}>

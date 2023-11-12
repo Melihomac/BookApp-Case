@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   StyleSheet,
   View,
@@ -14,6 +20,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { scaleHeight } from "../../scaleProps/ScaleProps";
 import SearchComponent from "../search/SearchComponent";
+import { db } from "../../FirebaseConfig";
+import { ref, set, onValue } from "firebase/database";
+import uuid from "react-native-uuid";
+import useHook from "../hook/useHook";
 
 interface Item {
   id: string;
@@ -23,15 +33,61 @@ interface Item {
 const BottomSheetComponent = () => {
   const refRBSheet = useRef<RBSheet>(null);
   const snapPoints = useMemo(() => ["%75"], []);
-  const DATA: Item[] = [
+  const [uuidNumber, setUuidNumber] = useState(uuid.v4());
+  const [selectedBook, setSelectedBook] = useState<string | null>(null);
+  const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [matchBook, setMatchBook] = useState("");
+  const [data, setData] = useState<Item[]>([
+    { id: "0", title: "Kitap Ekle" },
     { id: "1", title: "Kitap Ekle" },
     { id: "2", title: "Kitap Ekle" },
     { id: "3", title: "Kitap Ekle" },
-    { id: "4", title: "Kitap Ekle" },
-  ];
+  ]);
+
+  useEffect(() => {
+    setData([
+      { id: "0", title: matchBook },
+      { id: "1", title: "Kitap Ekle" },
+      { id: "2", title: "Kitap Ekle" },
+      { id: "3", title: "Kitap Ekle" },
+    ]);
+  }, [matchBook]);
+
+  useEffect(() => {
+    readData();
+  }, []);
+
+  const readData = () => {
+    const starCountRef = ref(db, "books/");
+    onValue(starCountRef, (snapshot) => {
+      const dataFromFirebase = snapshot.val();
+      console.log("AAAA ", dataFromFirebase.selectedBook);
+      useHook(searchTerm, books).then((data) => {
+        const dataBooks = data.map((book) => book.name);
+        console.log("DataBooks: ", dataBooks);
+        if (Array.isArray(dataBooks) && dataBooks.length > 0) {
+          if (dataBooks.includes(dataFromFirebase.selectedBook)) {
+            console.log("MATCH");
+            setMatchBook(dataFromFirebase?.selectedBook);
+          } else {
+            console.log("NO MATCH");
+          }
+        } else {
+          console.log("DataBooks is not a valid array.");
+        }
+      });
+    });
+  };
 
   const openBottomSheet = () => {
     refRBSheet.current?.open();
+  };
+
+  const closeBottomSheet = () => {
+    if (refRBSheet.current) {
+      refRBSheet.current.close();
+    }
   };
 
   const renderItem = ({ item }: { item: Item }) => {
@@ -63,7 +119,7 @@ const BottomSheetComponent = () => {
       <View>
         <View style={styles.myBookSectionStyle}>
           <FlatList
-            data={DATA}
+            data={data}
             renderItem={renderItem}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -85,7 +141,7 @@ const BottomSheetComponent = () => {
           >
             <View style={styles.bottomSheetStyle}>
               <View style={styles.shortStick}></View>
-              <SearchComponent />
+              <SearchComponent onClose={closeBottomSheet} />
               <View style={styles.yourBooksStyle}>
                 <Text style={styles.yourBooksBoldTextStyle}>
                   Okumuş Olabileceğin Kitaplar
