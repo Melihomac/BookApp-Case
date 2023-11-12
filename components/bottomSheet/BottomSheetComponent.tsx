@@ -53,7 +53,6 @@ const BottomSheetComponent = () => {
     const starCountRef = ref(db, "books/");
     onValue(starCountRef, (snapshot) => {
       const dataFromFirebase = snapshot.val();
-      console.log("AAAA ", dataFromFirebase.selectedBook);
       useHook(searchTerm, books).then((data) => {
         const dataBooks = data.map((book) => book.name);
         console.log("DataBooks: ", dataBooks);
@@ -82,7 +81,6 @@ const BottomSheetComponent = () => {
   };
 
   const renderItem = ({ item, index }: { item: Item; index: number }) => {
-    console.log("aa " + matchBook);
     return (
       <View key={index}>
         <TouchableOpacity
@@ -126,7 +124,7 @@ const BottomSheetComponent = () => {
         <GestureHandlerRootView>
           <RBSheet
             ref={refRBSheet}
-            height={scaleHeight(615)}
+            height={630}
             openDuration={250}
             customStyles={{
               wrapper: {

@@ -51,6 +51,8 @@ const App = () => {
                   }
                 />
               ),
+              title: "Library",
+              headerShown: false,
             })}
           />
           <Tab.Screen
