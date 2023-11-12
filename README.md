@@ -50,6 +50,7 @@ Welcome to my BookApp project. This project was made upon request. You can searc
    |--scaleProps/
    |   |--ScaleProps.tsx
    |-- App.tsx
+   |-- FirebaseConfig.tsx
    |-- app.json
    |-- babel.config.js
    |-- package.json
@@ -59,7 +60,8 @@ Welcome to my BookApp project. This project was made upon request. You can searc
 
 2. For Backend:
 
-   ```backend/
+   ```
+   backend/
    |-- node_modules/
    |-- assets/
    |-- app.js
@@ -77,3 +79,22 @@ Welcome to my BookApp project. This project was made upon request. You can searc
    |  -- Files.../
    ```
 
+### Firebase Configurations
+
+1. Create FirebaseProject
+2. Create FirebaseConfig.tsx file on your project root folder
+
+3. Add this code to your FirebaseConfig.tsx
+   ``` JS
+   import { initializeApp } from "firebase/app";
+   import { getDatabase } from "firebase/database";
+
+   const firebaseConfig = {
+   //YOUR CREDENTİALS
+   };
+
+   // Initialize Firebase
+   const app = initializeApp(firebaseConfig);
+   export const db = getDatabase(app);
+   ```
+4. Create Realtime Database on your firebase console.
