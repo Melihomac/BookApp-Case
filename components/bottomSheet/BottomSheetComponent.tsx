@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -13,7 +7,6 @@ import {
   Image,
   ImageBackground,
   FlatList,
-  ScrollView,
   SafeAreaView,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -22,35 +15,33 @@ import { scaleHeight } from "../../scaleProps/ScaleProps";
 import SearchComponent from "../search/SearchComponent";
 import { db } from "../../FirebaseConfig";
 import { ref, set, onValue } from "firebase/database";
-import uuid from "react-native-uuid";
 import useHook from "../hook/useHook";
 
 interface Item {
   id: string;
   title: string;
+  image: string;
 }
 
 const BottomSheetComponent = () => {
   const refRBSheet = useRef<RBSheet>(null);
   const snapPoints = useMemo(() => ["%75"], []);
-  const [uuidNumber, setUuidNumber] = useState(uuid.v4());
-  const [selectedBook, setSelectedBook] = useState<string | null>(null);
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [matchBook, setMatchBook] = useState("");
   const [data, setData] = useState<Item[]>([
-    { id: "0", title: "Kitap Ekle" },
-    { id: "1", title: "Kitap Ekle" },
-    { id: "2", title: "Kitap Ekle" },
-    { id: "3", title: "Kitap Ekle" },
+    { id: "0", title: "Kitap Ekle", image: "" },
+    { id: "1", title: "Kitap Ekle", image: "" },
+    { id: "2", title: "Kitap Ekle", image: "" },
+    { id: "3", title: "Kitap Ekle", image: "" },
   ]);
 
   useEffect(() => {
     setData([
-      { id: "0", title: matchBook },
-      { id: "1", title: "Kitap Ekle" },
-      { id: "2", title: "Kitap Ekle" },
-      { id: "3", title: "Kitap Ekle" },
+      { id: "0", title: matchBook, image: "" },
+      { id: "1", title: "Kitap Ekle", image: "" },
+      { id: "2", title: "Kitap Ekle", image: "" },
+      { id: "3", title: "Kitap Ekle", image: "" },
     ]);
   }, [matchBook]);
 
@@ -90,9 +81,10 @@ const BottomSheetComponent = () => {
     }
   };
 
-  const renderItem = ({ item }: { item: Item }) => {
+  const renderItem = ({ item, index }: { item: Item; index: number }) => {
+    console.log("aa " + matchBook);
     return (
-      <View>
+      <View key={index}>
         <TouchableOpacity
           style={styles.addBookOpacityStyle}
           onPress={openBottomSheet}
@@ -103,7 +95,13 @@ const BottomSheetComponent = () => {
           >
             <Image
               style={styles.opacityPlusIcon}
-              source={require("../../assets/icons/plusIcon.png")}
+              source={
+                item.title === matchBook
+                  ? {
+                      uri: `/Users/melihomac/Desktop/JobBookApp/backend${item.image}`,
+                    }
+                  : require("../../assets/icons/plusIcon.png")
+              }
             />
             <Text style={styles.opacityTextStyle} numberOfLines={2}>
               {item.title}

@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
-import { scaleHeight, scaleWidth } from "../../scaleProps/ScaleProps";
+import { StyleSheet, View, Image, Text } from "react-native";
+import { scaleWidth } from "../../scaleProps/ScaleProps";
 
 const MainHeader = () => {
   return (

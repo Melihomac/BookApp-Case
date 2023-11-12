@@ -1,20 +1,8 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
+import React from "react";
+import { StyleSheet, Image } from "react-native";
 import Library from "./components/Library";
 import Home from "./components/Home";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -22,7 +10,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 const Tab = createBottomTabNavigator();
 
 const App = () => {
-  const [tabBarSelect, setTabBarSelect] = useState();
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -54,14 +41,17 @@ const App = () => {
           <Tab.Screen
             name="Library"
             component={Library}
-            options={{
-              headerShown: false,
-              tabBarIcon: () => (
+            options={({ route }) => ({
+              tabBarIcon: ({ focused }) => (
                 <Image
-                  source={require("./assets/icons/BottomButtons/LibraryButton.png")}
+                  source={
+                    focused
+                      ? require("./assets/icons/BottomButtons/LibraryActive.png")
+                      : require("./assets/icons/BottomButtons/LibraryButton.png")
+                  }
                 />
               ),
-            }}
+            })}
           />
           <Tab.Screen
             name="Profil"

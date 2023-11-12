@@ -1,22 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
-  ScrollView,
   View,
   Image,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   FlatList,
-  ImageBackground,
   TextInput,
 } from "react-native";
-import search from "../../assets/icons/BottomButtons/SearchButton.png";
 import useHook from "../hook/useHook";
 import { ref, set } from "firebase/database";
 import uuid from "react-native-uuid";
 import { db } from "../../FirebaseConfig";
-import RBSheet from "react-native-raw-bottom-sheet";
 
 interface Item {
   id: string;
@@ -98,7 +93,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onClose }) => {
     <View style={styles.searchContainer}>
       <View style={styles.searchWrapper}>
         <Image
-          source={search}
+          source={require("../../assets/icons/BottomButtons/SearchButton.png")}
           resizeMode="contain"
           width={30}
           height={30}

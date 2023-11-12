@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 const MyBooks = () => {
   return (

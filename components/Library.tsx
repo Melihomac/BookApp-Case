@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import { useFonts } from "expo-font";
 import { useCallback } from "react";
 import MainHeader from "./header/MainHeader";
