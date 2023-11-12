@@ -27,35 +27,56 @@ Welcome to my BookApp project. This project was made upon request. You can searc
 1. For FrontEnd:
 
    ```
-   case/
-   |-- assets/
-   |   |-- fonts/
-   |   |-- icons/
-   |       |--BottomButtons/
-   |-- components/
-   |   |--Library.tsx
-   |   |-- Home.tsx
-   |   |-- bookReviews/
-   |       |-- BookReviews.tsx
-   |   |-- bottomSheet/
-   |       |-- BottomSheetComponent.tsx
-   |   |-- header/
-   |       |-- MainHeader.tsx
-   |   |-- hook/
-   |       |-- useHook.tsx
-   |-- myBooks/
-   |   |-- MyBooks.tsx
-   |-- nowReading/
-   |   |-- NowReading.tsx
-   |--scaleProps/
-   |   |--ScaleProps.tsx
-   |-- App.tsx
-   |-- FirebaseConfig.tsx
-   |-- app.json
-   |-- babel.config.js
-   |-- package.json
-   |-- README.md
-   |-- .gitignore
+   ├───assets
+   │   │   adaptive-icon.png
+   │   │   Cover.png
+   │   │   favicon.png
+   │   │   icon.png
+   │   │   splash.png
+   │   ├───fonts
+   │   │       FamiljenGrotesk-VariableFont_wght.ttf
+   │   │       KronaOne-Regular.ttf
+   │   └───icons
+   │       │   CardButtonIcons.png
+   │       │   LibraryIcon.png
+   │       │   plusIcon.png
+   │       │   RoundedButtons.png
+   │       └───BottomButtons
+   │               HomeIcon.png
+   │               LibraryActive.png
+   │               LibraryButton.png
+   │               ProfileButton.png
+   │               SearchButton.png
+   ├───components
+   │   │   Home.tsx
+   │   │   Library.tsx
+   │   ├───bookReviews
+   │   │       BookReviews.tsx
+   │   ├───bottomSheet
+   │   │       BottomSheetComponent.tsx
+   │   ├───header
+   │   │       MainHeader.tsx
+   │   ├───hook
+   │   │       useHook.tsx
+   │   ├───myBooks
+   │   │       MyBooks.tsx
+   │   ├───nowReading
+   │   │       NowReading.tsx
+   │   └───search
+   │           SearchComponent.tsx
+   ├───scaleProps
+   │       ScaleProps.tsx
+   │
+   │   .gitignore
+   │   app.json
+   │   App.tsx
+   │   babel.config.js
+   │   FirebaseConfig.tsx
+   │   package-lock.json
+   │   package.json
+   │   README.md
+   │   tsconfig.json
+   │   yarn.lock
    ```
 
 2. For Backend:
@@ -85,7 +106,8 @@ Welcome to my BookApp project. This project was made upon request. You can searc
 2. Create FirebaseConfig.tsx file on your project root folder
 
 3. Add this code to your FirebaseConfig.tsx
-   ``` JS
+
+   ```JS
    import { initializeApp } from "firebase/app";
    import { getDatabase } from "firebase/database";
 
@@ -97,4 +119,25 @@ Welcome to my BookApp project. This project was made upon request. You can searc
    const app = initializeApp(firebaseConfig);
    export const db = getDatabase(app);
    ```
+
 4. Create Realtime Database on your firebase console.
+
+---
+
+# ScreenShots
+
+## Library Review
+
+![anamenu](images/Library1.png)
+
+## Add Books
+
+![anamenu](images/AddBooks1.png)
+
+## Add Books 2
+
+![anamenu](images/AddBooks2.png)
+
+## Book Added
+
+![anamenu](images/LibraryBookAdd.png)
