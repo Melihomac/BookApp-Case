@@ -26,7 +26,7 @@ Welcome to my BookApp project. This project was made upon request. You can searc
 
 1. For FrontEnd:
 
-   `case/
+   ```case/
    |-- assets/
    |   |-- fonts/
    |   |-- icons/
@@ -53,7 +53,7 @@ Welcome to my BookApp project. This project was made upon request. You can searc
    |-- babel.config.js
    |-- package.json
    |-- README.md
-   |-- .gitignore`
+   |-- .gitignore```
 
 2. For Backend:
 
